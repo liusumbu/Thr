@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,17 +14,18 @@
 
       body {
         background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        height: 100vh;
+        overflow-x: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        overflow: hidden;
+        padding: 20px;
       }
 
       .envelope-container {
         position: relative;
-        width: 200px;
-        height: 150px;
+        width: 220px;
+        height: 160px;
         cursor: pointer;
         animation: wiggle 2s infinite;
         display: flex;
@@ -39,13 +40,13 @@
           transform: rotate(0deg);
         }
         25% {
-          transform: rotate(2deg);
+          transform: rotate(1.5deg);
         }
         50% {
-          transform: rotate(-2deg);
+          transform: rotate(-1.5deg);
         }
         75% {
-          transform: rotate(2deg);
+          transform: rotate(1deg);
         }
       }
 
@@ -56,11 +57,10 @@
         border-radius: 0 0 10px 10px;
         position: relative;
         box-shadow: 0 0 20px #1faa52;
-        overflow: hidden;
         z-index: 2;
       }
 
-      .envelope:before {
+      .envelope::before {
         content: "";
         position: absolute;
         top: 0;
@@ -78,7 +78,6 @@
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
-        overflow: visible;
         z-index: 1;
         pointer-events: none;
       }
@@ -88,15 +87,13 @@
         bottom: 0;
         left: 50%;
         transform: translate(-50%, 0);
-        width: 180px;
-        max-width: 90vw;
+        width: 200px;
         background: white;
         padding: 20px 10px;
         border-radius: 10px;
         text-align: center;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         opacity: 0;
-        transform-origin: center center;
         transition: transform 1.2s ease, opacity 1.2s ease;
       }
 
@@ -111,14 +108,14 @@
       }
 
       .paper .arabic {
-        font-size: 22px;
+        font-size: 20px;
         margin: 10px 0;
         color: #2d7f39;
       }
 
       .paper img {
         width: 100%;
-        max-width: 130px;
+        max-width: 140px;
         margin: 10px auto;
         display: block;
       }
@@ -169,15 +166,21 @@
 
       @media (max-width: 600px) {
         .envelope-container {
-          width: 150px;
-          height: 120px;
+          width: 170px;
+          height: 130px;
         }
+
         .paper {
-          width: 140px;
-          padding: 10px;
+          width: 160px;
+          padding: 15px 8px;
         }
+
         .paper img {
           max-width: 100px;
+        }
+
+        .click-text {
+          font-size: 14px;
         }
       }
     </style>
@@ -209,11 +212,11 @@
           paper.classList.remove("reveal");
           music.pause();
           music.currentTime = 0;
-          clickText.style.display = "block"; // Kalau ingin muncul lagi saat ditutup
+          clickText.style.display = "block";
         } else {
           paper.classList.add("reveal");
           music.play();
-          clickText.style.display = "none"; // Hilangkan tulisan 'Click'
+          clickText.style.display = "none";
         }
       }
     </script>
