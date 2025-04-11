@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selamat Hari Raya</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      body {
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .envelope-container {
+        position: relative;
+        width: 200px;
+        height: 150px;
+        cursor: pointer;
+        animation: wiggle 2s infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(2deg);
+        }
+        50% {
+          transform: rotate(-2deg);
+        }
+        75% {
+          transform: rotate(2deg);
+        }
+      }
+
+      .envelope {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom right, #1faa52, #3ab54a);
+        border-radius: 0 0 10px 10px;
+        position: relative;
+        box-shadow: 0 0 20px #1faa52;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .envelope:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top left, #1faa52, #3ab54a);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        z-index: 3;
+      }
+
+      .paper-wrapper {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        overflow: visible;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .paper {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 180px;
+        max-width: 90vw;
+        background: white;
+        padding: 20px 10px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transform-origin: center center;
+        transition: transform 1.2s ease, opacity 1.2s ease;
+      }
+
+      .paper.reveal {
+        opacity: 1;
+        transform: translate(-50%, -200px);
+      }
+
+      .paper h2 {
+        font-size: 18px;
+        color: #3ab54a;
+      }
+
+      .paper .arabic {
+        font-size: 22px;
+        margin: 10px 0;
+        color: #2d7f39;
+      }
+
+      .paper img {
+        width: 100%;
+        max-width: 130px;
+        margin: 10px auto;
+        display: block;
+      }
+
+      .moon {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: yellow;
+        border-radius: 50%;
+        box-shadow: 0 0 10px yellow;
+        animation: float 4s infinite ease-in-out;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .click-text {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-shadow: 1px 1px 3px #000;
+        z-index: 4;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .envelope-container {
+          width: 150px;
+          height: 120px;
+        }
+        .paper {
+          width: 140px;
+          padding: 10px;
+        }
+        .paper img {
+          max-width: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="envelope-container" onclick="toggleEnvelope()">
+      <div class="envelope"></div>
+      <div class="click-text" id="clickText">Click</div>
+      <div class="paper-wrapper">
+        <div class="paper" id="paper">
+          <h2>Selamat Hari Raya untuk kamu!</h2>
+          <div class="arabic">Scan dulu -)</div>
+          <img src="qrcode.png" alt="QR Code" />
+        </div>
+      </div>
+      <div class="moon" style="top: -30px; left: 20px"></div>
+      <div class="moon" style="top: -50px; right: 30px"></div>
+    </div>
+
+    <audio id="bgmusic" src="lagu-lebaran.mp3"></audio>
+
+    <script>
+      function toggleEnvelope() {
+        const paper = document.getElementById("paper");
+        const music = document.getElementById("bgmusic");
+        const clickText = document.getElementById("clickText");
+
+        if (paper.classList.contains("reveal")) {
+          paper.classList.remove("reveal");
+          music.pause();
+          music.currentTime = 0;
+          clickText.style.display = "block"; // Kalau ingin muncul lagi saat ditutup
+        } else {
+          paper.classList.add("reveal");
+          music.play();
+          clickText.style.display = "none"; // Hilangkan tulisan 'Click'
+        }
+      }
+    </script>
+  </body>
+</html>
